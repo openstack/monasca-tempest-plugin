@@ -1,0 +1,3 @@
+GITREPO["monasca-tempest-plugin"]=${MONASCA_TEMPEST_REPO:-${GIT_BASE}/openstack/monasca-tempest-plugin.git}
+GITDIR["monasca-tempest-plugin"]=$DEST/monasca-tempest-plugin
+GITBRANCH["monasca-tempest-plugin"]=master

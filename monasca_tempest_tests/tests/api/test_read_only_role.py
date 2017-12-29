@@ -16,7 +16,7 @@ import time
 from tempest.lib import decorators
 from tempest.lib import exceptions
 
-from monasca_tempest_tests import clients
+from monasca_tempest_tests.clients import api as clients
 from monasca_tempest_tests.tests.api import base
 from monasca_tempest_tests.tests.api import helpers
 
