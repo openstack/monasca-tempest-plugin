@@ -15,10 +15,21 @@
 from oslo_config import cfg
 
 
-service_option = cfg.BoolOpt("monasca",
-                             default=True,
-                             help="Whether or not Monasca is expected to be "
-                                  "available")
+service_available_group = cfg.OptGroup(name='service_available',
+                                       title='Available OpenStack Services')
+ServiceAvailableGroup = [
+    cfg.BoolOpt('logs',
+                default=True,
+                help=('Whether or not Monasca-Log-Api '
+                      'is expected to be available')),
+    cfg.BoolOpt('logs-search',
+                default=True,
+                help=('Whether or not Monasca-Log-Api search engine '
+                      '(ElasticSearch) is expected to be available')),
+    cfg.BoolOpt("monasca",
+                default=True,
+                help="Whether or not Monasca is expected to be "
+                     "available")]
 
 monitoring_group = cfg.OptGroup(name="monitoring",
                                 title="Monitoring Service Options")
@@ -37,5 +48,11 @@ MonitoringGroup = [
                default='publicURL',
                choices=['public', 'admin', 'internal',
                         'publicURL', 'adminURL', 'internalURL'],
-               help="The endpoint type to use for the monitoring service.")
+               help="The endpoint type to use for the monitoring service."),
+    cfg.StrOpt('api_version',
+               default='v2.0',
+               help='monasca-log-api API version'),
+    cfg.StrOpt('kibana_version',
+               default='4.6.3',
+               help='Kibana version')
 ]

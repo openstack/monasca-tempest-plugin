@@ -2,7 +2,7 @@
 Monasca Tempest Plugin
 ======================
 
-Tempest plugin for Monasca Project
+Tempest plugin for Monasca API and Log API Project
 
 It contains the tempest plugin for the functional testing of Monasca Project.
 

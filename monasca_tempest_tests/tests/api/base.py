@@ -18,7 +18,7 @@ from tempest import config
 from tempest.lib import exceptions
 import tempest.test
 
-from monasca_tempest_tests import clients
+from monasca_tempest_tests.clients import api as clients
 
 CONF = config.CONF
 
