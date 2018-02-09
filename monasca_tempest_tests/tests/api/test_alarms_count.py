@@ -1,4 +1,4 @@
-# (C) Copyright 2016-2017 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2016-2018 Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -15,11 +15,13 @@
 import time
 import urllib
 
-from monasca_tempest_tests.tests.api import base
-from monasca_tempest_tests.tests.api import helpers
 from tempest.lib.common.utils import data_utils
 from tempest.lib import decorators
 from tempest.lib import exceptions
+
+from monasca_tempest_tests.tests.api import base
+from monasca_tempest_tests.tests.api import constants
+from monasca_tempest_tests.tests.api import helpers
 
 
 GROUP_BY_ALLOWED_PARAMS = {'alarm_definition_id', 'name', 'state', 'severity',
@@ -125,6 +127,9 @@ class TestAlarmsCount(base.BaseMonascaTest):
             else:
                 msg = "Failed to create alarm_definition during setup: {} {}".format(resp.status, response_body)
                 assert False, msg
+
+        # Give Thresh time to process the new Alarm Definitions
+        time.sleep(constants.ALARM_DEFINITION_CREATION_WAIT)
 
         # create alarms
         for metric in metrics_to_send:
