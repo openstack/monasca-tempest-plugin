@@ -58,7 +58,8 @@ class TestMetrics(base.BaseMonascaTest):
             self.assertEqual(200, resp.status)
             elements = response_body['elements']
             for element in elements:
-                if str(element['name']) == name:
+                # check if metric is there and dimension info already available
+                if (str(element['name']) == name and len(element['dimensions']) > 0):
                     self._verify_list_measurements_element(element, key, value)
                     measurement = element['measurements'][0]
                     self._verify_list_measurements_measurement(
