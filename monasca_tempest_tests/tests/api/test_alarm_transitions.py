@@ -181,3 +181,28 @@ class TestAlarmTransitions(base.BaseMonascaTest):
         self._send_measurement(metric_def, 3)
 
         self._wait_for_alarm_transition(alarm_id, "OK")
+
+    @decorators.attr(type="gate")
+    def test_alarm_metric_mixcase(self):
+        metric_def = {
+            'name': data_utils.rand_name("MixCase_Test"),
+            'dimensions': {
+                'dim_to_match': data_utils.rand_name("max_match")
+            }
+        }
+        expression = "max(" + metric_def['name'] + ") > 14"
+        definition = helpers.create_alarm_definition(name="Metric Mixcase Test",
+                                                     description="",
+                                                     expression=expression,
+                                                     match_by=["dim_to_match"])
+        resp, resp_body = self.monasca_client.create_alarm_definitions(definition)
+        self.assertEqual(201, resp.status)
+        definition_id = resp_body['id']
+
+        # Ensure the new Alarm Definition gets to the Threshold Engine
+        time.sleep(constants.ALARM_DEFINITION_CREATION_WAIT)
+
+        self._send_measurement(metric_def, 20)
+
+        alarm_id, initial_state = self._wait_for_alarm_creation(definition_id)
+        self.assertEqual("ALARM", initial_state)
