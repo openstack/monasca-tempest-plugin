@@ -81,7 +81,7 @@ class TestAlarmTransitions(base.BaseMonascaTest):
                            .create_alarm_definitions(definition))
         self.assertEqual(201, resp.status)
         definition_id = resp_body['id']
-        time.sleep(1)
+        time.sleep(constants.ALARM_DEFINITION_CREATION_WAIT)
 
         self._send_measurement(metric_def, 1)
 
@@ -108,7 +108,7 @@ class TestAlarmTransitions(base.BaseMonascaTest):
         resp, resp_body = self.monasca_client.create_alarm_definitions(definition)
         self.assertEqual(201, resp.status)
         definition_id = resp_body['id']
-        time.sleep(1)
+        time.sleep(constants.ALARM_DEFINITION_CREATION_WAIT)
 
         self._send_measurement(metric_def, 1)
 
@@ -167,7 +167,7 @@ class TestAlarmTransitions(base.BaseMonascaTest):
         resp, resp_body = self.monasca_client.create_alarm_definitions(definition)
         self.assertEqual(201, resp.status)
         definition_id = resp_body['id']
-        time.sleep(1)
+        time.sleep(constants.ALARM_DEFINITION_CREATION_WAIT)
 
         self._send_measurement(metric_def, 1)
 
