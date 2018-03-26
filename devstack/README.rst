@@ -29,5 +29,5 @@ Running Monasca tempest tests
 2. Running monasca tempest tests::
 
     cd /opt/stack/tempest
-    tempest run -r monasca_tempest_plugin.tests.api
-    tempest run -r monasca_tempest_plugin.tests.log_api
+    tempest run -r monasca_tempest_tests.tests.api
+    tempest run -r monasca_tempest_tests.tests.log_api
