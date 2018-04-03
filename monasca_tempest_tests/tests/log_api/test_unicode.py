@@ -56,7 +56,6 @@ class TestUnicodeV3(base.BaseLogsTestCase):
     @decorators.attr(type="gate")
     def test_unicode_message(self):
         for m in _UNICODE_CASES:
-            case, msg = m.values()
-            self._run_and_wait(*base.generate_small_message(msg), headers={
-                'LA-Unicode-Case': case
+            self._run_and_wait(*base.generate_small_message(m['input']), headers={
+                'LA-Unicode-Case': m['case']
             })
