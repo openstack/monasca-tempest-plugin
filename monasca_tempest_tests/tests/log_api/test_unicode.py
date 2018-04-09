@@ -15,11 +15,12 @@
 from tempest.lib.common.utils import test_utils
 from tempest.lib import decorators
 
+from monasca_common.tests.validation import test_metric_validation
 from monasca_tempest_tests.tests.log_api import base
 
 _RETRY_COUNT = 15
 _RETRY_WAIT = 2
-_UNICODE_CASES = base.UNICODE_MESSAGES
+_UNICODE_CASES = test_metric_validation.UNICODE_MESSAGES
 
 
 class TestUnicodeV3(base.BaseLogsTestCase):
