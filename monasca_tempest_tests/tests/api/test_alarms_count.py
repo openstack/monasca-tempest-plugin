@@ -125,7 +125,8 @@ class TestAlarmsCount(base.BaseMonascaTest):
             if resp.status == 201:
                 cls.alarm_definition_ids.append(response_body['id'])
             else:
-                msg = "Failed to create alarm_definition during setup: {} {}".format(resp.status, response_body)
+                msg = "Failed to create alarm_definition during setup: {} {}".format(resp.status,
+                                                                                     response_body)
                 assert False, msg
 
         # Give Thresh time to process the new Alarm Definitions
@@ -159,7 +160,8 @@ class TestAlarmsCount(base.BaseMonascaTest):
                 # time.sleep(15)
                 return
 
-        msg = "Failed to create all specified alarms during setup, alarm_count was {}".format(alarm_count)
+        msg = "Failed to create all specified alarms" \
+              " during setup, alarm_count was {}".format(alarm_count)
         assert False, msg
 
     @classmethod
@@ -300,8 +302,8 @@ class TestAlarmsCount(base.BaseMonascaTest):
         self._verify_counts_format(response_body, group_by=list(GROUP_BY_ALLOWED_PARAMS))
 
         # Expect duplicates
-        msg = "Not enough distinct counts. Expected at least {}, found {}".format(expected_num_count,
-                                                                                  len(response_body['counts']))
+        msg = "Not enough distinct counts. Expected at " \
+              "least {}, found {}".format(expected_num_count, len(response_body['counts']))
         assert expected_num_count <= len(response_body['counts']), msg
 
     @decorators.attr(type='gate')
@@ -340,7 +342,8 @@ class TestAlarmsCount(base.BaseMonascaTest):
     @decorators.attr(type=['negative'])
     def test_invalid_offset(self):
         self.assertRaises(exceptions.UnprocessableEntity,
-                          self.monasca_client.count_alarms, "?group_by=metric_name&offset=not_an_int")
+                          self.monasca_client.count_alarms,
+                          "?group_by=metric_name&offset=not_an_int")
 
     @decorators.attr(type='gate')
     def test_limit_and_offset(self):

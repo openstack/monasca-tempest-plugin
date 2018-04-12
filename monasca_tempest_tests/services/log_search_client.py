@@ -51,7 +51,7 @@ class LogsSearchClient(rest_client.RestClient):
         uri = '_msearch'
         body = """
                {"index" : "*", "search_type" : "dfs_query_then_fetch"}
-               {"query" : {"match" : {"message":" """+message+""" "}}}
+               {"query" : {"match" : {"message":" """ + message + """ "}}}
         """
         response, body = self.post(self._uri(uri), body, headers)
         self.expected_success(200, response.status)

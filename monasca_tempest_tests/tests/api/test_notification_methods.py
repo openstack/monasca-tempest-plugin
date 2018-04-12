@@ -203,7 +203,8 @@ class TestNotificationMethods(base.BaseMonascaTest):
                           self.monasca_client.create_notifications,
                           notification)
 
-    # The below tests are making sure that we accept passing in case insensitive types and that we still validate the
+    # The below tests are making sure that we accept passing in case insensitive types
+    # and that we still validate the
     # address if the types are case insensitive
     @decorators.attr(type="gate")
     def test_create_notification_method_webhook_with_lower_case_type(self):
@@ -271,9 +272,10 @@ class TestNotificationMethods(base.BaseMonascaTest):
     @decorators.attr(type=['negative'])
     def test_create_notification_method_with_invalid_type(self):
         notification = helpers.create_notification(type='random')
-        self.assertRaises((exceptions.BadRequest, exceptions.NotFound, exceptions.UnprocessableEntity),
-                          self.monasca_client.create_notifications,
-                          notification)
+        self.assertRaises(
+            (exceptions.BadRequest, exceptions.NotFound, exceptions.UnprocessableEntity),
+            self.monasca_client.create_notifications,
+            notification)
 
     @decorators.attr(type="gate")
     @decorators.attr(type=['negative'])
@@ -662,10 +664,11 @@ class TestNotificationMethods(base.BaseMonascaTest):
             notification)
         id = response_body['id']
         self.assertEqual(201, resp.status)
-        self.assertRaises((exceptions.BadRequest, exceptions.NotFound, exceptions.UnprocessableEntity),
-                          self.monasca_client.update_notification_method, id,
-                          name=response_body['name'], type='random',
-                          address=response_body['address'], period=0)
+        self.assertRaises(
+            (exceptions.BadRequest, exceptions.NotFound, exceptions.UnprocessableEntity),
+            self.monasca_client.update_notification_method,
+            id, name=response_body['name'], type='random',
+            address=response_body['address'], period=0)
         resp, response_body = \
             self.monasca_client.delete_notification_method(id)
         self.assertEqual(204, resp.status)
@@ -967,8 +970,9 @@ class TestNotificationMethods(base.BaseMonascaTest):
             notification)
         id = response_body['id']
         self.assertEqual(201, resp.status)
-        self.assertRaises((exceptions.BadRequest, exceptions.NotFound, exceptions.UnprocessableEntity),
-                          self.monasca_client.patch_notification_method, id, type='random')
+        self.assertRaises(
+            (exceptions.BadRequest, exceptions.NotFound, exceptions.UnprocessableEntity),
+            self.monasca_client.patch_notification_method, id, type='random')
         resp, response_body = \
             self.monasca_client.delete_notification_method(id)
         self.assertEqual(204, resp.status)
@@ -984,8 +988,9 @@ class TestNotificationMethods(base.BaseMonascaTest):
         self.assertEqual(201, resp.status)
         new_address_long = "x" * (
             constants.MAX_NOTIFICATION_METHOD_ADDRESS_LENGTH + 1)
-        self.assertRaises((exceptions.BadRequest, exceptions.UnprocessableEntity),
-                          self.monasca_client.patch_notification_method, id, address=new_address_long)
+        self.assertRaises(
+            (exceptions.BadRequest, exceptions.UnprocessableEntity),
+            self.monasca_client.patch_notification_method, id, address=new_address_long)
         resp, response_body = \
             self.monasca_client.delete_notification_method(id)
         self.assertEqual(204, resp.status)

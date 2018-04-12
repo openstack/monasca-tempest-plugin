@@ -74,7 +74,8 @@ class TestStatistics(base.BaseMonascaTest):
             time.sleep(constants.RETRY_WAIT_SECS)
 
         if num_measurements < MIN_REQUIRED_MEASUREMENTS:
-            assert False, "Required {} measurements, found {}".format(MIN_REQUIRED_MEASUREMENTS, num_measurements)
+            assert False, "Required {} measurements, found {}".format(MIN_REQUIRED_MEASUREMENTS,
+                                                                      num_measurements)
 
         cls._end_timestamp = cls._start_timestamp + 3000
         cls._end_time_iso = helpers.timestamp_to_iso(cls._end_timestamp)
@@ -84,13 +85,17 @@ class TestStatistics(base.BaseMonascaTest):
         cls._group_by_end_time_iso = helpers.timestamp_to_iso(cls._start_timestamp + 4000)
 
         group_by_metrics = [
-            helpers.create_metric(name=name2, dimensions={'key1': 'value1', 'key2': 'value5', 'key3': 'value7'},
+            helpers.create_metric(name=name2,
+                                  dimensions={'key1': 'value1', 'key2': 'value5', 'key3': 'value7'},
                                   timestamp=cls._start_timestamp + 1, value=2),
-            helpers.create_metric(name=name2, dimensions={'key1': 'value2', 'key2': 'value5', 'key3': 'value7'},
+            helpers.create_metric(name=name2,
+                                  dimensions={'key1': 'value2', 'key2': 'value5', 'key3': 'value7'},
                                   timestamp=cls._start_timestamp + 1001, value=3),
-            helpers.create_metric(name=name2, dimensions={'key1': 'value3', 'key2': 'value6', 'key3': 'value7'},
+            helpers.create_metric(name=name2,
+                                  dimensions={'key1': 'value3', 'key2': 'value6', 'key3': 'value7'},
                                   timestamp=cls._start_timestamp + 2001, value=5),
-            helpers.create_metric(name=name2, dimensions={'key1': 'value4', 'key2': 'value6', 'key3': 'value8'},
+            helpers.create_metric(name=name2,
+                                  dimensions={'key1': 'value4', 'key2': 'value6', 'key3': 'value8'},
                                   timestamp=cls._start_timestamp + 3001, value=7),
         ]
 

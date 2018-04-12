@@ -458,7 +458,8 @@ class TestAlarms(base.BaseMonascaTest):
     @decorators.attr(type="gate")
     def test_list_alarms_by_offset_limit(self):
         definition_ids, expected_metric = self._create_alarms_for_test_alarms(num=3)
-        resp, response_body = self.monasca_client.list_alarms('?metric_name=' + expected_metric['name'])
+        resp, response_body = self.monasca_client.list_alarms('?metric_name=' +
+                                                              expected_metric['name'])
         self._verify_list_alarms_elements(resp, response_body,
                                           expect_num_elements=3)
         elements = response_body['elements']
@@ -500,11 +501,13 @@ class TestAlarms(base.BaseMonascaTest):
     @decorators.attr(type="gate")
     def test_list_alarms_sort_by(self):
         alarm_definition_ids, expected_metric = self._create_alarms_for_test_alarms(num=3)
-        resp, response_body = self.monasca_client.list_alarms('?metric_name=' + expected_metric['name'])
+        resp, response_body = self.monasca_client.list_alarms('?metric_name=' +
+                                                              expected_metric['name'])
         self._verify_list_alarms_elements(resp, response_body,
                                           expect_num_elements=3)
 
-        resp, response_body = self.monasca_client.list_alarms('?metric_name=' + expected_metric['name'] +
+        resp, response_body = self.monasca_client.list_alarms('?metric_name=' +
+                                                              expected_metric['name'] +
                                                               '&sort_by=created_timestamp')
         self._verify_list_alarms_elements(resp, response_body,
                                           expect_num_elements=3)
@@ -513,8 +516,8 @@ class TestAlarms(base.BaseMonascaTest):
         last_timestamp = elements[0]['created_timestamp']
         for element in elements:
             assert element['created_timestamp'] >= last_timestamp, \
-                "Created_timestamps are not in sorted order {} came before {}".format(last_timestamp,
-                                                                                      element['created_timestamp'])
+                "Created_timestamps are not in sorted " \
+                "order {} came before {}".format(last_timestamp, element['created_timestamp'])
             last_timestamp = element['created_timestamp']
 
         # Set link and lifecycle_state to sort in opposite order
@@ -561,13 +564,14 @@ class TestAlarms(base.BaseMonascaTest):
     @decorators.attr(type='gate')
     def test_list_alarms_sort_by_asc_desc(self):
         alarm_definition_ids, expected_metric = self._create_alarms_for_test_alarms(num=3)
-        resp, response_body = self.monasca_client.list_alarms('?metric_name=' + expected_metric['name'])
+        resp, response_body = self.monasca_client.list_alarms('?metric_name=' +
+                                                              expected_metric['name'])
         self._verify_list_alarms_elements(resp, response_body,
                                           expect_num_elements=3)
 
-        resp, response_body = self.monasca_client.list_alarms('?metric_name=' + expected_metric['name'] +
-                                                              '&sort_by=' +
-                                                              urlparse.quote('created_timestamp asc'))
+        resp, response_body = self.monasca_client.list_alarms(
+            '?metric_name=' + expected_metric['name'] +
+            '&sort_by=' + urlparse.quote('created_timestamp asc'))
         self._verify_list_alarms_elements(resp, response_body,
                                           expect_num_elements=3)
 
@@ -575,13 +579,13 @@ class TestAlarms(base.BaseMonascaTest):
         last_timestamp = elements[0]['created_timestamp']
         for element in elements:
             assert element['created_timestamp'] >= last_timestamp,\
-                "Created_timestamps are not in ascending order {} came before {}".format(last_timestamp,
-                                                                                         element['created_timestamp'])
+                "Created_timestamps are not in ascending" \
+                " order {} came before {}".format(last_timestamp, element['created_timestamp'])
             last_timestamp = element['created_timestamp']
 
-        resp, response_body = self.monasca_client.list_alarms('?metric_name=' + expected_metric['name'] +
-                                                              '&sort_by=' +
-                                                              urlparse.quote('created_timestamp desc'))
+        resp, response_body = self.monasca_client.list_alarms(
+            '?metric_name=' + expected_metric['name'] +
+            '&sort_by=' + urlparse.quote('created_timestamp desc'))
         self._verify_list_alarms_elements(resp, response_body,
                                           expect_num_elements=3)
 
@@ -589,8 +593,8 @@ class TestAlarms(base.BaseMonascaTest):
         last_timestamp = elements[0]['created_timestamp']
         for element in elements:
             assert element['created_timestamp'] <= last_timestamp,\
-                "Created_timestamps are not in descending order {} came before {}".format(last_timestamp,
-                                                                                          element['created_timestamp'])
+                "Created_timestamps are not in descending" \
+                " order {} came before {}".format(last_timestamp, element['created_timestamp'])
             last_timestamp = element['created_timestamp']
 
     @decorators.attr(type="gate")
@@ -624,11 +628,13 @@ class TestAlarms(base.BaseMonascaTest):
             self.assertEqual(204, resp.status)
         self._wait_for_alarms(3, alarm_def_id)
 
-        resp, response_body = self.monasca_client.list_alarms('?alarm_definition_id=' + alarm_def_id)
+        resp, response_body = self.monasca_client.list_alarms('?alarm_definition_id=' +
+                                                              alarm_def_id)
         self._verify_list_alarms_elements(resp, response_body,
                                           expect_num_elements=3)
 
-        resp, response_body = self.monasca_client.list_alarms('?alarm_definition_id=' + alarm_def_id +
+        resp, response_body = self.monasca_client.list_alarms('?alarm_definition_id=' +
+                                                              alarm_def_id +
                                                               '&sort_by=alarm_id')
         self._verify_list_alarms_elements(resp, response_body,
                                           expect_num_elements=3)
@@ -641,22 +647,24 @@ class TestAlarms(base.BaseMonascaTest):
                                                                        element['id'])
             previous_id = element['id']
 
-        resp, response_body = self.monasca_client.list_alarms('?alarm_definition_id=' + alarm_def_id +
+        resp, response_body = self.monasca_client.list_alarms('?alarm_definition_id=' +
+                                                              alarm_def_id +
                                                               '&sort_by=alarm_id&limit=1')
         self.assertEqual(200, resp.status)
         elements = response_body['elements']
         self.assertEqual(1, len(elements))
         self.assertEqual(full_elements[0]['id'], elements[0]['id'])
 
-        resp, response_body = self.monasca_client.list_alarms('?alarm_definition_id=' + alarm_def_id +
+        resp, response_body = self.monasca_client.list_alarms('?alarm_definition_id=' +
+                                                              alarm_def_id +
                                                               '&sort_by=alarm_id&offset=1')
         self.assertEqual(200, resp.status)
         elements = response_body['elements']
         self.assertEqual(2, len(elements))
         self.assertEqual(full_elements[1]['id'], elements[0]['id'])
 
-        resp, response_body = self.monasca_client.list_alarms('?alarm_definition_id=' + alarm_def_id +
-                                                              '&sort_by=state_updated_timestamp&offset=1')
+        resp, response_body = self.monasca_client.list_alarms(
+            '?alarm_definition_id=' + alarm_def_id + '&sort_by=state_updated_timestamp&offset=1')
         self.assertEqual(200, resp.status)
         elements = response_body['elements']
         self.assertEqual(2, len(elements))
