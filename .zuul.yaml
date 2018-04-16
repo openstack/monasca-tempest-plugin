@@ -1,0 +1,11 @@
+- project:
+    check:
+      jobs:
+        - monasca-tempest-python-influxdb
+        - monasca-tempest-python-cassandra
+        - monascalog-tempest
+    gate:
+      jobs:
+        - monasca-tempest-python-influxdb
+        - monasca-tempest-python-cassandra
+        - monascalog-tempest
