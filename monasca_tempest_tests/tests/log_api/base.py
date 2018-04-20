@@ -85,17 +85,12 @@ def _get_headers(headers=None, content_type="application/json"):
     return headers
 
 
-def _get_data(message, content_type="application/json", version="v3"):
-    if version == "v3":
-        data = {
-            'logs': [{
-                'message': message
-            }]
-        }
-    elif 'application/json' == content_type:
-        data = {
+def _get_data(message):
+    data = {
+        'logs': [{
             'message': message
-        }
+        }]
+    }
     return data
 
 
@@ -117,7 +112,7 @@ class BaseLogsTestCase(test.BaseTestCase):
             ['monasca-user', 'admin']).credentials
         cls.os_primary = clients.Manager(credentials=credentials)
 
-        cls.logs_clients = cls.os_primary.log_api_clients
+        cls.logs_client = cls.os_primary.log_api_client
         cls.logs_search_client = cls.os_primary.log_search_client
 
     @staticmethod

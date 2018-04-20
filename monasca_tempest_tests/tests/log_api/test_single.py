@@ -23,7 +23,7 @@ _RETRY_WAIT = 2
 
 
 class TestSingleLog(base.BaseLogsTestCase):
-    def _run_and_wait(self, key, data, version,
+    def _run_and_wait(self, key, data,
                       content_type='application/json',
                       headers=None, fields=None):
 
@@ -38,9 +38,9 @@ class TestSingleLog(base.BaseLogsTestCase):
                          'Find log message in elasticsearch: {0}'.format(key))
 
         headers = base._get_headers(headers, content_type)
-        data = base._get_data(data, content_type, version=version)
+        data = base._get_data(data)
 
-        client = self.logs_clients[version]
+        client = self.logs_client
         response, _ = client.send_single_log(data, headers, fields)
         self.assertEqual(204, response.status)
 
@@ -53,54 +53,30 @@ class TestSingleLog(base.BaseLogsTestCase):
 
     @decorators.attr(type="gate")
     def test_small_message(self):
-        for ver in self.logs_clients:
-            self._run_and_wait(*base.generate_small_message(), version=ver)
+        self._run_and_wait(*base.generate_small_message())
 
     @decorators.attr(type="gate")
     def test_medium_message(self):
-        for ver in self.logs_clients:
-            self._run_and_wait(*base.generate_medium_message(), version=ver)
+        self._run_and_wait(*base.generate_medium_message())
 
     @decorators.attr(type="gate")
     def test_big_message(self):
-        for ver in self.logs_clients:
-            self._run_and_wait(*base.generate_large_message(), version=ver)
+        self._run_and_wait(*base.generate_large_message())
 
     @decorators.attr(type="gate")
     def test_small_message_multiline(self):
-        for ver in self.logs_clients:
-            sid, message = base.generate_small_message()
-            self._run_and_wait(sid, message.replace(' ', '\n'), version=ver)
+        sid, message = base.generate_small_message()
+        self._run_and_wait(sid, message.replace(' ', '\n'))
 
     @decorators.attr(type="gate")
     def test_medium_message_multiline(self):
-        for ver in self.logs_clients:
-            sid, message = base.generate_medium_message()
-            self._run_and_wait(sid, message.replace(' ', '\n'), version=ver)
+        sid, message = base.generate_medium_message()
+        self._run_and_wait(sid, message.replace(' ', '\n'))
 
     @decorators.attr(type="gate")
     def test_big_message_multiline(self):
-        for ver in self.logs_clients:
-            sid, message = base.generate_large_message()
-            self._run_and_wait(sid, message.replace(' ', '\n'), version=ver)
-
-    @decorators.attr(type="gate")
-    def test_send_header_application_type(self):
-        sid, message = base.generate_unique_message()
-        headers = {'X-Application-Type': 'application-type-test'}
-        response = self._run_and_wait(sid, message, headers=headers,
-                                      version="v2")
-        self.assertEqual('application-type-test',
-                         response[0]['_source']['component'])
-
-    @decorators.attr(type="gate")
-    def test_send_header_dimensions(self):
-        sid, message = base.generate_unique_message()
-        headers = {'X-Dimensions': 'server:WebServer01,environment:production'}  # noqa
-        response = self._run_and_wait(sid, message, headers=headers,
-                                      version="v2")
-        self.assertEqual('production', response[0]['_source']['environment'])
-        self.assertEqual('WebServer01', response[0]['_source']['server'])
+        sid, message = base.generate_large_message()
+        self._run_and_wait(sid, message.replace(' ', '\n'))
 
     @decorators.attr(type="gate")
     def test_send_cross_tenant(self):
@@ -108,8 +84,7 @@ class TestSingleLog(base.BaseLogsTestCase):
         headers = {'X-Roles': 'admin, monitoring-delegate'}
         cross_tennant_id = '2106b2c8da0eecdb3df4ea84a0b5624b'
         fields = {'tenant_id': cross_tennant_id}
-        response = self._run_and_wait(sid, message, version="v3",
-                                      headers=headers, fields=fields)
+        response = self._run_and_wait(sid, message, headers=headers, fields=fields)
         self.assertThat(response[0]['_source']['tenant'],
                         matchers.StartsWith(cross_tennant_id))
 

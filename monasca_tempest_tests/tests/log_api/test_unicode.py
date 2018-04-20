@@ -17,7 +17,6 @@ from tempest.lib import decorators
 
 from monasca_tempest_tests.tests.log_api import base
 
-_API_VERSION = 'v3'
 _RETRY_COUNT = 15
 _RETRY_WAIT = 2
 _UNICODE_CASES = base.UNICODE_MESSAGES
@@ -40,9 +39,9 @@ class TestUnicodeV3(base.BaseLogsTestCase):
                          'Find log message in elasticsearch: {0}'.format(key))
 
         headers = base._get_headers(headers, content_type)
-        data = base._get_data(data, content_type, version=_API_VERSION)
+        data = base._get_data(data)
 
-        client = self.logs_clients[_API_VERSION]
+        client = self.logs_client
         response, _ = client.send_single_log(data, headers, fields)
         self.assertEqual(204, response.status)
 
