@@ -202,7 +202,11 @@ class TestAlarmTransitions(base.BaseMonascaTest):
         # Ensure the new Alarm Definition gets to the Threshold Engine
         time.sleep(constants.ALARM_DEFINITION_CREATION_WAIT)
 
-        self._send_measurement(metric_def, 20)
+        self._send_measurement(metric_def, 1)
 
         alarm_id, initial_state = self._wait_for_alarm_creation(definition_id)
-        self.assertEqual("ALARM", initial_state)
+        self.assertEqual("UNDETERMINED", initial_state)
+
+        self._send_measurement(metric_def, 20)
+
+        self._wait_for_alarm_transition(alarm_id, "ALARM")
