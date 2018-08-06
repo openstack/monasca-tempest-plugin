@@ -14,6 +14,8 @@
 
 import time
 
+from six import text_type
+
 from monasca_tempest_tests.tests.api import base
 from monasca_tempest_tests.tests.api import constants
 from monasca_tempest_tests.tests.api import helpers
@@ -90,7 +92,7 @@ class TestMeasurements(base.BaseMonascaTest):
                        format(name2, start_time, end_time))
 
         for timer in range(constants.MAX_RETRIES):
-            responses = map(cls.monasca_client.list_measurements, queries)
+            responses = list(map(cls.monasca_client.list_measurements, queries))
             resp_first = responses[0][0]
             response_body_first = responses[0][1]
             resp_second = responses[1][0]
@@ -271,7 +273,7 @@ class TestMeasurements(base.BaseMonascaTest):
         self._verify_list_measurements_elements(elements, None, None)
         for measurements in elements:
             self.assertEqual(1, len(measurements['dimensions'].keys()))
-            self.assertEqual([u'key2'], measurements['dimensions'].keys())
+            self.assertEqual([u'key2'], list(measurements['dimensions'].keys()))
 
     @decorators.attr(type="gate")
     def test_list_measurements_with_group_by_multiple(self):
@@ -347,7 +349,7 @@ class TestMeasurements(base.BaseMonascaTest):
                        '}&merge_metrics=false'.
                        format(self._names_list[0], self._start_time,
                               self._end_time))
-        responses = map(self.monasca_client.list_measurements, queries)
+        responses = list(map(self.monasca_client.list_measurements, queries))
         for i in range(2):
             self._verify_list_measurements(responses[i][0], responses[i][1])
 
@@ -388,7 +390,7 @@ class TestMeasurements(base.BaseMonascaTest):
             self.assertEqual(set(element),
                              set(['columns', 'dimensions', 'id',
                                   'measurements', 'name']))
-            self.assertTrue(type(element['name']) is unicode)
+            self.assertTrue(type(element['name']) is text_type)
             self.assertTrue(type(element['dimensions']) is dict)
             self.assertTrue(type(element['columns']) is list)
             self.assertTrue(type(element['measurements']) is list)

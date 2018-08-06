@@ -18,6 +18,8 @@
 import time
 
 from six.moves import urllib_parse as urlparse
+from six import PY3
+from six import text_type
 
 from tempest.lib.common.utils import data_utils
 from tempest.lib import decorators
@@ -75,15 +77,20 @@ class TestMetrics(base.BaseMonascaTest):
 
     @decorators.attr(type='gate')
     def test_create_metric_with_multibyte_character(self):
-        name = data_utils.rand_name('ｎａｍｅ').decode('utf8')
-        key = data_utils.rand_name('ｋｅｙ').decode('utf8')
-        value = data_utils.rand_name('ｖａｌｕｅ').decode('utf8')
+        name = data_utils.rand_name('ｎａｍｅ') if PY3 \
+            else data_utils.rand_name('ｎａｍｅ').decode('utf8')
+        key = data_utils.rand_name('ｋｅｙ') if PY3 \
+            else data_utils.rand_name('ｋｅｙ').decode('utf8')
+        value = data_utils.rand_name('ｖａｌｕｅ') if PY3 \
+            else data_utils.rand_name('ｖａｌｕｅ').decode('utf8')
         timestamp = int(round(time.time() * 1000))
         time_iso = helpers.timestamp_to_iso(timestamp)
         end_timestamp = int(round((time.time() + 3600 * 24) * 1000))
         end_time_iso = helpers.timestamp_to_iso(end_timestamp)
-        value_meta_key = data_utils.rand_name('value_meta_ｋｅｙ').decode('utf8')
-        value_meta_value = data_utils.rand_name('value_meta_ｖａｌｕｅ').decode('utf8')
+        value_meta_key = data_utils.rand_name('value_meta_ｋｅｙ') if PY3 \
+            else data_utils.rand_name('value_meta_ｋｅｙ').decode('utf8')
+        value_meta_value = data_utils.rand_name('value_meta_ｖａｌｕｅ') if PY3 \
+            else data_utils.rand_name('value_meta_ｖａｌｕｅ').decode('utf8')
         metric = helpers.create_metric(name=name,
                                        dimensions={key: value},
                                        timestamp=timestamp,
@@ -616,8 +623,8 @@ class TestMetrics(base.BaseMonascaTest):
 
     def _verify_list_metrics_element(self, element, test_key=None,
                                      test_value=None, test_name=None):
-        self.assertTrue(type(element['id']) is unicode)
-        self.assertTrue(type(element['name']) is unicode)
+        self.assertTrue(type(element['id']) is text_type)
+        self.assertTrue(type(element['name']) is text_type)
         self.assertTrue(type(element['dimensions']) is dict)
         self.assertEqual(set(element), set(['dimensions', 'id', 'name']))
         self.assertTrue(str(element['id']) is not None)
@@ -653,7 +660,7 @@ class TestMetrics(base.BaseMonascaTest):
             if elements:
                 dimensions = elements[0]
                 dimension = dimensions['dimensions']
-                value = dimension[unicode(key)]
+                value = dimension[text_type(key)]
                 self.assertEqual(value_org, str(value))
                 break
             else:

@@ -16,6 +16,7 @@
 import time
 
 import six.moves.urllib.parse as urlparse
+from six import PY3
 from tempest.lib.common.utils import data_utils
 from tempest.lib import decorators
 from tempest.lib import exceptions
@@ -219,8 +220,7 @@ class TestAlarmDefinitions(base.BaseMonascaTest):
         alarm_def_name = data_utils.rand_name('monitoring_alarm')
         alarm_definition = helpers.create_alarm_definition(
             name=alarm_def_name,
-            expression="avg(mem_total_mb{dev=\usr\local\bin}) "
-                       "gt 0",
+            expression="avg(mem_total_mb{dev=\\usr\local\bin}) gt 0",
             alarm_actions=[notification_id],
             ok_actions=[notification_id],
             undetermined_actions=[notification_id],
@@ -339,8 +339,9 @@ class TestAlarmDefinitions(base.BaseMonascaTest):
 
     @decorators.attr(type="gate")
     def test_list_alarm_definitions_with_multibyte_character(self):
-        name = data_utils.rand_name('ａｌａｒｍ＿ｄｅｆｉｎｉｔｉｏｎ').decode('utf8')
-        description = 'ｄｅｓｃｒｉｐｔｉｏｎ'.decode('utf8')
+        rand_name = data_utils.rand_name('ａｌａｒｍ＿ｄｅｆｉｎｉｔｉｏｎ')
+        name = rand_name if PY3 else rand_name.decode('utf8')
+        description = 'ｄｅｓｃｒｉｐｔｉｏｎ' if PY3 else 'ｄｅｓｃｒｉｐｔｉｏｎ'.decode('utf8')
 
         response_body_list = self._create_alarm_definitions(
             name=name,
@@ -720,8 +721,9 @@ class TestAlarmDefinitions(base.BaseMonascaTest):
     @decorators.attr(type="gate")
     def test_get_alarm_definition_with_multibyte_character(self):
         # Create an alarm definition
-        name = data_utils.rand_name('ａｌａｒｍ＿ｄｅｆｉｎｉｔｉｏｎ').decode('utf8')
-        description = 'ｄｅｓｃｒｉｐｔｉｏｎ'.decode('utf8')
+        rand_name = data_utils.rand_name('ａｌａｒｍ＿ｄｅｆｉｎｉｔｉｏｎ')
+        name = rand_name if PY3 else rand_name.decode('utf-8')
+        description = 'ｄｅｓｃｒｉｐｔｉｏｎ' if PY3 else 'ｄｅｓｃｒｉｐｔｉｏｎ'.decode('utf8')
         response_body_list = self._create_alarm_definitions(
             name=name,
             description=description,

@@ -92,7 +92,7 @@ class TestAlarmsStateHistoryOneTransition(base.BaseMonascaTest):
         if elements:
             element = elements[0]
             dimension = element['metrics'][0]['dimensions']
-            dimension_items = dimension.items()
+            dimension_items = list(dimension.items())
             dimension_item = dimension_items[0]
             dimension_item_0 = dimension_item[0]
             dimension_item_1 = dimension_item[1]

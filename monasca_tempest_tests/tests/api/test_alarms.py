@@ -13,7 +13,6 @@
 # under the License.
 
 import time
-import urllib
 
 import six.moves.urllib.parse as urlparse
 
@@ -527,7 +526,7 @@ class TestAlarms(base.BaseMonascaTest):
         for iter in range(2):
             sort_by_params = 'link,lifecycle_state'
             if iter == 1:
-                query_parms = urllib.urlencode([('sort_by', sort_by_params)])
+                query_parms = urlparse.urlencode([('sort_by', sort_by_params)])
             else:
                 query_parms = 'sort_by=' + sort_by_params
             resp, response_body = self.monasca_client.list_alarms(

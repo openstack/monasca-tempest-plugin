@@ -15,6 +15,7 @@
 import time
 
 import six.moves.urllib.parse as urlparse
+from six import text_type
 
 from monasca_tempest_tests.tests.api import base
 from monasca_tempest_tests.tests.api import constants
@@ -336,11 +337,11 @@ class TestNotificationMethods(base.BaseMonascaTest):
         element = elements[0]
         self.assertTrue(set(['id', 'links', 'name', 'type', 'address', 'period']) ==
                         set(element))
-        self.assertTrue(type(element['id']) is unicode)
+        self.assertTrue(type(element['id']) is text_type)
         self.assertTrue(type(element['links']) is list)
-        self.assertTrue(type(element['name']) is unicode)
-        self.assertTrue(type(element['type']) is unicode)
-        self.assertTrue(type(element['address']) is unicode)
+        self.assertTrue(type(element['name']) is text_type)
+        self.assertTrue(type(element['type']) is text_type)
+        self.assertTrue(type(element['address']) is text_type)
 
         resp, response_body = self.monasca_client.\
             delete_notification_method(id)

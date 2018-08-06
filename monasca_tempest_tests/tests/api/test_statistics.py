@@ -16,6 +16,8 @@
 import time
 
 import six.moves.urllib.parse as urlparse
+from six.moves.urllib.parse import urlencode
+from six import text_type
 
 from monasca_tempest_tests.tests.api import base
 from monasca_tempest_tests.tests.api import constants
@@ -23,7 +25,6 @@ from monasca_tempest_tests.tests.api import helpers
 from tempest.lib.common.utils import data_utils
 from tempest.lib import decorators
 from tempest.lib import exceptions
-from urllib import urlencode
 
 NUM_MEASUREMENTS = 100
 MIN_REQUIRED_MEASUREMENTS = 2
@@ -331,7 +332,7 @@ class TestStatistics(base.BaseMonascaTest):
         self.assertEqual(len(elements), 2)
         for statistics in elements:
             self.assertEqual(1, len(statistics['dimensions'].keys()))
-            self.assertEqual([u'key2'], statistics['dimensions'].keys())
+            self.assertEqual([u'key2'], list(statistics['dimensions'].keys()))
 
     @decorators.attr(type="gate")
     def test_list_statistics_with_group_by_multiple(self):
@@ -479,9 +480,9 @@ class TestStatistics(base.BaseMonascaTest):
     def _verify_element(self, element):
         self.assertTrue(set(['id', 'name', 'dimensions', 'columns',
                              'statistics']) == set(element))
-        self.assertTrue(type(element['id']) is unicode)
+        self.assertTrue(type(element['id']) is text_type)
         self.assertTrue(element['id'] is not None)
-        self.assertTrue(type(element['name']) is unicode)
+        self.assertTrue(type(element['name']) is text_type)
         self.assertTrue(type(element['dimensions']) is dict)
         self.assertEqual(len(element['dimensions']), 0)
         self.assertTrue(type(element['columns']) is list)

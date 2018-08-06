@@ -13,7 +13,8 @@
 # under the License.
 
 import time
-import urllib
+
+import six.moves.urllib.parse as parse
 
 from tempest.lib.common.utils import data_utils
 from tempest.lib import decorators
@@ -239,7 +240,7 @@ class TestAlarmsCount(base.BaseMonascaTest):
         # a string. The API needs to handle both.
         # test_with_all_group_by_params tests multiple group_by without
         # urlencode
-        query_params = urllib.urlencode([('group_by', 'state,severity')])
+        query_params = parse.urlencode([('group_by', 'state,severity')])
         resp, response_body = self.monasca_client.count_alarms("?" + query_params)
         self._verify_counts_format(response_body, group_by=['state', 'severity'])
 

@@ -14,7 +14,8 @@
 # under the License.
 
 import time
-from urllib import urlencode
+
+from six.moves.urllib.parse import urlencode
 
 from tempest.lib.common.utils import data_utils
 from tempest.lib import decorators

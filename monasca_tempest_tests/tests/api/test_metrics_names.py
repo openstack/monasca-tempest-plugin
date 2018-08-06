@@ -14,12 +14,13 @@
 
 import time
 
+from six.moves.urllib.parse import urlencode
+
 from monasca_tempest_tests.tests.api import base
 from monasca_tempest_tests.tests.api import constants
 from monasca_tempest_tests.tests.api import helpers
 from tempest.lib.common.utils import data_utils
 from tempest.lib import decorators
-from urllib import urlencode
 
 
 class TestMetricsNames(base.BaseMonascaTest):
