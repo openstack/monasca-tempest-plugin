@@ -13,6 +13,7 @@
 # under the License.
 
 from oslo_serialization import jsonutils as json
+from six import PY3
 from tempest.lib.common import rest_client
 
 
@@ -28,6 +29,7 @@ class LogsSearchClient(rest_client.RestClient):
 
     @staticmethod
     def deserialize(body):
+        body = body.decode('utf-8') if PY3 else body
         return json.loads(body.replace("\n", ""))
 
     @staticmethod
