@@ -7,7 +7,7 @@
         - monasca-tempest-python-influxdb
         - monasca-tempest-python-cassandra
         - monascalog-tempest
-        - build-openstack-sphinx-docs:
+        - openstack-tox-docs:
             voting: false
     gate:
       queue: monasca
