@@ -1,10 +1,16 @@
 - project:
+    templates:
+      - check-requirements
+      - tempest-plugin-jobs
     check:
       jobs:
         - monasca-tempest-python-influxdb
         - monasca-tempest-python-cassandra
         - monascalog-tempest
+        - build-openstack-sphinx-docs:
+            voting: false
     gate:
+      queue: monasca
       jobs:
         - monasca-tempest-python-influxdb
         - monasca-tempest-python-cassandra
