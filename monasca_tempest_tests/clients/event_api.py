@@ -1,4 +1,4 @@
-# Copyright 2015-2016 FUJITSU LIMITED
+# Copyright 2019 FUJITSU LIMITED
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -15,21 +15,21 @@
 from tempest import clients
 
 from monasca_tempest_tests.services import elasticsearch_client
-from monasca_tempest_tests.services import log_api_v3_client
+from monasca_tempest_tests.services import events_api_client
 
 
 class Manager(clients.Manager):
     def __init__(self, credentials=None):
         super(Manager, self).__init__(credentials)
 
-        self.log_api_client = log_api_v3_client.LogApiV3Client(
+        self.events_api_client = events_api_client.EventApiClient(
             self.auth_provider,
-            'logs',
+            'events',
             None
         )
 
-        self.log_search_client = elasticsearch_client.ElasticsearchClient(
+        self.events_search_client = elasticsearch_client.ElasticsearchClient(
             self.auth_provider,
-            'logs-search',
+            'events-search',
             None
         )

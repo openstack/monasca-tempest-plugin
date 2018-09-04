@@ -12,16 +12,19 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+from oslo_config import cfg
 from oslo_serialization import jsonutils as json
 from six import PY3
 from tempest.lib.common import rest_client
 
+CONF = cfg.CONF
 
-class LogsSearchClient(rest_client.RestClient):
+
+class ElasticsearchClient(rest_client.RestClient):
     uri_prefix = "/elasticsearch"
 
     def __init__(self, auth_provider, service, region):
-        super(LogsSearchClient, self).__init__(
+        super(ElasticsearchClient, self).__init__(
             auth_provider,
             service,
             region,
@@ -49,13 +52,38 @@ class LogsSearchClient(rest_client.RestClient):
     def count_search_messages(self, message, headers):
         return len(self.search_messages(message, headers))
 
-    def search_messages(self, message, headers):
+    def search_messages(self, message, headers=None):
         uri = '_msearch'
         body = """
                {"index" : "*", "search_type" : "dfs_query_then_fetch"}
                {"query" : {"match" : {"message":" """ + message + """ "}}}
         """
         response, body = self.post(self._uri(uri), body, headers)
+        self.expected_success(200, response.status)
+        body = self.deserialize(body)
+        return body['responses'][0].get('hits', {}).get('hits', [])
+
+    def search_event_by_event_type(self, event_type):
+        uri = '_msearch'
+        body = """
+               {"index" : "*", "search_type" : "dfs_query_then_fetch"}
+               {"query" : {"match" : {"event_type":" """ + event_type + """ "}}}
+        """
+        header = {'kbn-version': CONF.monitoring.kibana_version}
+        response, body = self.post(self._uri(uri), body, header)
+        self.expected_success(200, response.status)
+        body = self.deserialize(body)
+        return body['responses'][0].get('hits', {}).get('hits', [])
+
+    def search_event(self, event):
+        uri = '_msearch'
+        header = {'kbn-version': CONF.monitoring.kibana_version}
+        event = json.dumps(event)
+        body = """
+               {"index" : "*", "search_type" : "dfs_query_then_fetch"}
+               {"query" : {"match" : {"event":" """ + event + """ "}}}
+        """
+        response, body = self.post(self._uri(uri), body, header)
         self.expected_success(200, response.status)
         body = self.deserialize(body)
         return body['responses'][0].get('hits', {}).get('hits', [])
