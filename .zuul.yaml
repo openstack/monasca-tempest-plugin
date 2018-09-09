@@ -1,14 +1,14 @@
+
 - project:
     templates:
       - check-requirements
       - tempest-plugin-jobs
+      - build-openstack-docs-pti
     check:
       jobs:
         - monasca-tempest-python-influxdb
         - monasca-tempest-python-cassandra
         - monascalog-tempest
-        - openstack-tox-docs:
-            voting: false
     gate:
       queue: monasca
       jobs:
