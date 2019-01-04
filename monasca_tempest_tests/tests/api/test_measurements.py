@@ -115,7 +115,7 @@ class TestMeasurements(base.BaseMonascaTest):
         cls._start_time = start_time
         cls._end_time = end_time
 
-    @decorators.attr(type="gate")
+    @decorators.attr(type=["gate", "smoke"])
     def test_list_measurements(self):
         query_parms = '?name=' + str(self._names_list[0]) + \
                       '&merge_metrics=true' + \

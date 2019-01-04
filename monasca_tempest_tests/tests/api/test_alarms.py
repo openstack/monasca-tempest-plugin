@@ -34,7 +34,7 @@ class TestAlarms(base.BaseMonascaTest):
     def resource_cleanup(cls):
         super(TestAlarms, cls).resource_cleanup()
 
-    @decorators.attr(type="gate")
+    @decorators.attr(type=["gate", "smoke"])
     def test_list_alarms(self):
         alarm_definition_ids, expected_metric \
             = self._create_alarms_for_test_alarms(num=1)

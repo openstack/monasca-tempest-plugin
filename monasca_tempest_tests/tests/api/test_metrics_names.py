@@ -71,7 +71,7 @@ class TestMetricsNames(base.BaseMonascaTest):
     def resource_cleanup(cls):
         super(TestMetricsNames, cls).resource_cleanup()
 
-    @decorators.attr(type='gate')
+    @decorators.attr(type=["gate", "smoke"])
     def test_list_metrics_names(self):
         resp, response_body = self.monasca_client.list_metrics_names()
         metric_names = self._verify_response(resp, response_body)

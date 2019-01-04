@@ -51,7 +51,7 @@ class TestSingleLog(base.BaseLogsTestCase):
 
         return response
 
-    @decorators.attr(type="gate")
+    @decorators.attr(type=["gate", "smoke"])
     def test_small_message(self):
         self._run_and_wait(*base.generate_small_message())
 

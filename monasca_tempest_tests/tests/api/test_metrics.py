@@ -32,7 +32,7 @@ from monasca_tempest_tests.tests.api import helpers
 
 class TestMetrics(base.BaseMonascaTest):
 
-    @decorators.attr(type='gate')
+    @decorators.attr(type=["gate", "smoke"])
     def test_create_metric(self):
         name = data_utils.rand_name('name')
         key = data_utils.rand_name('key')
@@ -385,7 +385,7 @@ class TestMetrics(base.BaseMonascaTest):
                           self.monasca_client.create_metrics,
                           metric)
 
-    @decorators.attr(type='gate')
+    @decorators.attr(type=["gate", "smoke"])
     def test_list_metrics(self):
         resp, response_body = self.monasca_client.list_metrics()
         self.assertEqual(200, resp.status)

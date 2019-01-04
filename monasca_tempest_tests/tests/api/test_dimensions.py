@@ -170,7 +170,7 @@ class TestDimensions(base.BaseMonascaTest):
         self.assertRaises(exceptions.UnprocessableEntity,
                           self.monasca_client.list_dimension_values)
 
-    @decorators.attr(type='gate')
+    @decorators.attr(type=["gate", "smoke"])
     def test_list_dimension_names(self):
         resp, response_body = self.monasca_client.list_dimension_names()
         self.assertEqual(200, resp.status)

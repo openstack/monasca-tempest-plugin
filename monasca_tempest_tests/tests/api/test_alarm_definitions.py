@@ -31,7 +31,7 @@ NUM_ALARM_DEFINITIONS = 2
 
 class TestAlarmDefinitions(base.BaseMonascaTest):
 
-    @decorators.attr(type="gate")
+    @decorators.attr(type=["gate", "smoke"])
     def test_create_alarm_definition(self):
         # Create an alarm definition
         name = data_utils.rand_name('alarm_definition')
@@ -321,7 +321,7 @@ class TestAlarmDefinitions(base.BaseMonascaTest):
 
     # List
 
-    @decorators.attr(type="gate")
+    @decorators.attr(type=["gate", "smoke"])
     def test_list_alarm_definitions(self):
         expression = "avg(cpu_utilization{service=compute}) >= 1234"
         response_body_list = self._create_alarm_definitions(
