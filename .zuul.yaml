@@ -6,12 +6,16 @@
       - build-openstack-docs-pti
     check:
       jobs:
-        - monasca-tempest-python-influxdb
-        - monasca-tempest-python-cassandra
-        - monascalog-tempest
+        - monasca-tempest-python2-influxdb
+        - monasca-tempest-python3-influxdb
+        - monasca-tempest-python2-cassandra
+        - monascalog-python2-tempest
+        - monascalog-python3-tempest
     gate:
       queue: monasca
       jobs:
-        - monasca-tempest-python-influxdb
-        - monasca-tempest-python-cassandra
-        - monascalog-tempest
+        - monasca-tempest-python2-influxdb
+        - monasca-tempest-python3-influxdb
+        - monasca-tempest-python2-cassandra
+        - monascalog-python2-tempest
+        - monascalog-python3-tempest
