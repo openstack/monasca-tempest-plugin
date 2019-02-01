@@ -93,11 +93,13 @@ def _get_data(message):
 
 
 class BaseLogsTestCase(test.BaseTestCase):
-    """Base test case class for all Monitoring API tests."""
+    """Base test case class for all Logs tests."""
 
     @classmethod
     def skip_checks(cls):
         super(BaseLogsTestCase, cls).skip_checks()
+        if not CONF.service_available.logs:
+            raise cls.skipException("Monasca logs support is required")
 
     @classmethod
     def resource_setup(cls):
@@ -120,3 +122,13 @@ class BaseLogsTestCase(test.BaseTestCase):
                 method(resource_id)
             except exceptions.EndpointNotFound:
                 pass
+
+
+class BaseLogsSearchTestCase(BaseLogsTestCase):
+    """Base test case class for all LogsSearch tests."""
+    @classmethod
+    def skip_checks(cls):
+        super(BaseLogsSearchTestCase, cls).skip_checks()
+        # logs-search tests need both, 'logs' and 'logs-search'
+        if not CONF.service_available.logs_search:
+            raise cls.skipException("Monasca logs-search support is required")

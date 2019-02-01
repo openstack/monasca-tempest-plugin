@@ -22,7 +22,7 @@ _RETRY_COUNT = 15
 _RETRY_WAIT = 2
 
 
-class TestSingleLog(base.BaseLogsTestCase):
+class TestSingleLog(base.BaseLogsSearchTestCase):
     def _run_and_wait(self, key, data,
                       content_type='application/json',
                       headers=None, fields=None):

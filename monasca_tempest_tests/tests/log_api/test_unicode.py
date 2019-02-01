@@ -23,7 +23,7 @@ _RETRY_WAIT = 2
 _UNICODE_CASES = test_metric_validation.UNICODE_MESSAGES
 
 
-class TestUnicodeV3(base.BaseLogsTestCase):
+class TestUnicodeV3(base.BaseLogsSearchTestCase):
 
     def _run_and_wait(self, key, data,
                       content_type='application/json',

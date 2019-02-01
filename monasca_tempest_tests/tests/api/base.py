@@ -29,6 +29,8 @@ class BaseMonascaTest(tempest.test.BaseTestCase):
     @classmethod
     def skip_checks(cls):
         super(BaseMonascaTest, cls).skip_checks()
+        if not CONF.service_available.monasca:
+            raise cls.skipException("Monasca support is required")
 
     @classmethod
     def resource_setup(cls):
