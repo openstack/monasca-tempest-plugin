@@ -54,5 +54,10 @@ MonitoringGroup = [
                help='monasca-log-api API version'),
     cfg.StrOpt('kibana_version',
                default='4.6.3',
-               help='Kibana version')
+               help='Kibana version'),
+    cfg.IntOpt('log_api_max_log_size',
+               default=1024 * 1024,
+               help=('Refers to payload/envelope size. This should be set '
+                     'to the same value as "[service]max_log_size" in the '
+                     'monasca-log-api configuration'))
 ]
