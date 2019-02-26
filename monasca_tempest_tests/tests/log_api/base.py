@@ -40,7 +40,10 @@ def _get_message_size(size_base):
 _SMALL_MESSAGE_SIZE = _get_message_size(0.001)
 _MEDIUM_MESSAGE_SIZE = _get_message_size(0.01)
 _LARGE_MESSAGE_SIZE = _get_message_size(0.1)
-_REJECTABLE_MESSAGE_SIZE = _get_message_size(1.1)
+# rejectable message must be larger than [service]max_log_size
+# from monasca-log-api.conf
+_reject_size = CONF.monitoring.log_api_max_log_size/_ONE_MB + 0.1
+_REJECTABLE_MESSAGE_SIZE = _get_message_size(_reject_size)
 
 
 def generate_unique_message(message=None, size=50):
