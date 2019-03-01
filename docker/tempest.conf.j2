@@ -1,0 +1,11 @@
+[identity]
+auth_version = v3
+uri = {{ AUTH_URI | default(KEYSTONE_IDENTITY_URI + "/v2.0/") }}
+uri_v3 = {{ AUTH_URI_V3 | default(KEYSTONE_IDENTITY_URI + "/v3/") }}
+
+[auth]
+use_dynamic_credentials = {{ USE_DYNAMIC_CREDS }}
+admin_username = {{ KEYSTONE_ADMIN_USER }}
+admin_password = {{ KEYSTONE_ADMIN_PASSWORD }}
+admin_project_name = {{ KEYSTONE_ADMIN_PROJECT }}
+admin_domain_name = {{ KEYSTONE_ADMIN_DOMAIN }}
