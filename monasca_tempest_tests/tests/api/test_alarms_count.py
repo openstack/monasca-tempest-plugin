@@ -276,6 +276,16 @@ class TestAlarmsCount(base.BaseMonascaTest):
     def test_filter_multiple_dimensions(self):
         self.run_count_test("?metric_dimensions=hostname:test_1,unique:1")
 
+    # test with multiple metric dimensions values
+    @decorators.attr(type='gate')
+    def test_filter_multiple_dimensions_values_1(self):
+        self.run_count_test("?metric_dimensions=hostname:test_1|test_2,unique:1")
+
+    # test with multiple metric dimensions values (order should not matter)
+    @decorators.attr(type='gate')
+    def test_filter_multiple_dimensions_values_2(self):
+        self.run_count_test("?metric_dimensions=hostname:test_2|test_1,unique:1")
+
     # test with filter and group_by parameters
     @decorators.attr(type='gate')
     def test_filter_and_group_by_params(self):

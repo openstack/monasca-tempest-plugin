@@ -1,0 +1,5 @@
+---
+other:
+  - |
+    Update alarms count tests to test a query string with multiple
+    metric_dimension values.
