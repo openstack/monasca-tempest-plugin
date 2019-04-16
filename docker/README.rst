@@ -47,7 +47,6 @@ Example command to run tempest tests with custom variables::
 In this example you configure all environment variables in ``tempest_con.env``
 file::
 
-    MONASCA_URI=172.17.0.1:8070
     KEYSTONE_IDENTITY_URI=http://172.17.0.1:35357
     USE_DYNAMIC_CREDS=True
     KEYSTONE_ADMIN_USER=mini-mon
@@ -59,6 +58,13 @@ file::
     OS_PASSWORD=password
     OS_PROJECT_NAME=mini-mon
     OS_DOMAIN_NAME=Default
+
+In order to run in docker-compose add this section to docker-compose.yaml::
+
+    tempest-tests:
+      image: monasca/tempest-tests:master
+      environment:
+        KEYSTONE_IDENTITY_URI: "http://keystone:35357"
 
 
 Environment variables
@@ -85,12 +91,14 @@ STAY_ALIVE_ON_FAILURE     false                          If true, container runs
 
 Wait scripts environment variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-========================= ============================== ==========================================
-Variable                  Default                        Description
-========================= ============================== ==========================================
-MONASCA_URI               http://monasca:8070            The metric pipeline endpoint
-KEYSTONE_IDENTITY_URI     http://keystone:35357          URI to Keystone admin endpoint
-========================= ============================== ==========================================
+========================= =========================== =============================================
+Variable                  Default                     Description
+========================= =========================== =============================================
+KEYSTONE_IDENTITY_URI     http://keystone:35357       URI to Keystone admin endpoint
+MONASCA_WAIT_FOR_API      true                        If true, ensure Monasca API is available
+MONASCA_API_WAIT_RETRIES  24                          Retries for Monasca API availability checks
+MONASCA_API_WAIT_INTERVAL 5                           Sleep time between Monasca API retries
+========================= =========================== =============================================
 
 
 Scripts

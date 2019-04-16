@@ -1,4 +1,4 @@
-ARG DOCKER_IMAGE=monasca/tempest
+ARG DOCKER_IMAGE=monasca/tempest-tests
 ARG APP_REPO=https://git.openstack.org/openstack/monasca-tempest-plugin
 
 # Branch, tag or git hash to build from.
@@ -6,7 +6,7 @@ ARG REPO_VERSION=master
 ARG CONSTRAINTS_BRANCH=master
 
 # Extra Python3 dependencies.
-ARG EXTRA_DEPS="python-openstackclient"
+ARG EXTRA_DEPS="python-openstackclient python-monascaclient"
 
 # Always start from `monasca-base` image and use specific tag of it.
 ARG BASE_TAG=master
@@ -14,7 +14,6 @@ FROM monasca/base:$BASE_TAG
 
 # Environment variables used for our service or wait scripts.
 ENV \
-    MONASCA_URI=http://monasca:8070 \
     KEYSTONE_IDENTITY_URI=http://keystone:35357 \
     USE_DYNAMIC_CREDS=True \
     KEYSTONE_ADMIN_USER=mini-mon \
@@ -26,6 +25,9 @@ ENV \
     OS_PASSWORD=password \
     OS_TENANT_NAME=mini-mon \
     OS_DOMAIN_NAME=Default \
+    MONASCA_WAIT_FOR_API=true \
+    MONASCA_API_WAIT_RETRIES=24 \
+    MONASCA_API_WAIT_INTERVAL=5 \
     STAY_ALIVE_ON_FAILURE=false
 
 # Copy all neccessary files to proper locations.
