@@ -27,6 +27,8 @@ detailed build description.
 How to start
 ~~~~~~~~~~~~
 
+To run, this container needs to connect to a working Keystone and Monasca API.
+
 When using running Monasca in Docker you can connect this image to the network
 where Monasca is accessible and run all tests.
 Find network on machine with Monasca with ``docker network ls``.
@@ -35,14 +37,14 @@ For example you can see similar information to:
 
 Using this network run all tempest tests with following command:
 
-``docker run -it --rm --network=monasca-docker_default monasca/tempest:master``
+``docker run -it --rm --network=monasca-docker_default monasca/tempest-tests:master``
 
 It's important to configure all necessary connection environment variables.
 They are listed in the next two sections.
 
 Example command to run tempest tests with custom variables::
 
-``docker run -it --rm --network=monasca-docker_default --env-file=tempest_con.env monasca/tempest:master``
+``docker run -it --rm --network=monasca-docker_default --env-file=tempest_con.env monasca/tempest-tests:master``
 
 In this example you configure all environment variables in ``tempest_con.env``
 file::
