@@ -8,6 +8,6 @@ the same environment where Tempest is installed.
 
 At the command line::
 
-    $ git clone https://git.openstack.org/openstack/monasca-tempest-plugin
+    $ git clone https://opendev.org/openstack/monasca-tempest-plugin
     $ cd monasca-tempest-plugin/
     $ pip install monasca-tempest-plugin

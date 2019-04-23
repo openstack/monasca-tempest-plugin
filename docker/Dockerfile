@@ -1,5 +1,5 @@
 ARG DOCKER_IMAGE=monasca/tempest-tests
-ARG APP_REPO=https://git.openstack.org/openstack/monasca-tempest-plugin
+ARG APP_REPO=https://review.opendev.org/openstack/monasca-tempest-plugin
 
 # Branch, tag or git hash to build from.
 ARG REPO_VERSION=master

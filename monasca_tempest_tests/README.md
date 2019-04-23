@@ -6,7 +6,7 @@ Currently the devstack environment is needed to run the tests. Instructions on s
 1. Clone the OpenStack Tempest repo, and cd to it.
 
    ```
-   git clone https://git.openstack.org/openstack/tempest.git
+   git clone https://opendev.org/openstack/tempest.git
    cd tempest
    ```
 2. Create a virtualenv for running the Tempest tests and activate it. For example in the Tempest root dir
