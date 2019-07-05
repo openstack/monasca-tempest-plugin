@@ -216,7 +216,8 @@ class TestMeasurements(base.BaseMonascaTest):
 
             # Get first offset from api
             query_parms = '?name=' + str(self._names_list[1]) + \
-                          '&merge_metrics=true&start_time=' + measurements[measurement_index - 1][0] + \
+                          '&merge_metrics=true&start_time=' + \
+                          measurements[measurement_index - 1][0] + \
                           '&end_time=' + self._end_time + \
                           '&limit=1'
             resp, response_body = self.monasca_client.list_measurements(query_parms)
