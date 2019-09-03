@@ -81,7 +81,8 @@ def _get_headers(headers=None, content_type="application/json"):
         headers = {}
     headers.update({
         'Content-Type': content_type,
-        'kbn-version': CONF.monitoring.kibana_version
+        'kbn-version': CONF.monitoring.kibana_version,
+        'kbn-xsrf': 'kibana'
     })
     return headers
 

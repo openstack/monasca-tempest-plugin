@@ -53,7 +53,7 @@ MonitoringGroup = [
                default='v2.0',
                help='monasca-log-api API version'),
     cfg.StrOpt('kibana_version',
-               default='4.6.3',
+               default='7.3.0',
                help='Kibana version'),
     cfg.IntOpt('log_api_max_log_size',
                default=1024 * 1024,

@@ -87,8 +87,8 @@ class TestDimensions(base.BaseMonascaTest):
         cls._dim_names = sorted(set(cls._dim_names_metric1
                                     + cls._dim_names_metric2))
         cls._dim_names_in_timerange = sorted(set(
-                                        cls._dim_names_metric1_in_timerange
-                                        + cls._dim_names_metric2_in_timerange))
+            cls._dim_names_metric1_in_timerange +
+            cls._dim_names_metric2_in_timerange))
         cls._dim_name1 = name1
         cls._dim_name1_values_for_metric1 = [value1, value2]
         cls._dim_name1_values_for_metric1_in_timerange = [value2]

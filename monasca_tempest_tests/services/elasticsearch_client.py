@@ -19,6 +19,8 @@ from tempest.lib.common import rest_client
 
 CONF = cfg.CONF
 
+header = {'kbn-version': CONF.monitoring.kibana_version, 'kbn-xsrf': 'kibana'}
+
 
 class ElasticsearchClient(rest_client.RestClient):
     uri_prefix = "/elasticsearch"
@@ -54,10 +56,9 @@ class ElasticsearchClient(rest_client.RestClient):
 
     def search_messages(self, message, headers=None):
         uri = '_msearch'
-        body = """
+        body = u"""
                {"index" : "*", "search_type" : "dfs_query_then_fetch"}
-               {"query" : {"match" : {"message":" """ + message + """ "}}}
-        """
+               {"query" : {"match" : {"message":" """ + message + """ "}}}\n"""
         response, body = self.post(self._uri(uri), body, headers)
         self.expected_success(200, response.status)
         body = self.deserialize(body)
@@ -65,11 +66,9 @@ class ElasticsearchClient(rest_client.RestClient):
 
     def search_event_by_event_type(self, event_type):
         uri = '_msearch'
-        body = """
+        body = u"""
                {"index" : "*", "search_type" : "dfs_query_then_fetch"}
-               {"query" : {"match" : {"event_type":" """ + event_type + """ "}}}
-        """
-        header = {'kbn-version': CONF.monitoring.kibana_version}
+               {"query" : {"match" : {"event_type":" """ + event_type + """ "}}}\n"""
         response, body = self.post(self._uri(uri), body, header)
         self.expected_success(200, response.status)
         body = self.deserialize(body)
@@ -77,12 +76,10 @@ class ElasticsearchClient(rest_client.RestClient):
 
     def search_event(self, event):
         uri = '_msearch'
-        header = {'kbn-version': CONF.monitoring.kibana_version}
         event = json.dumps(event)
-        body = """
+        body = u"""
                {"index" : "*", "search_type" : "dfs_query_then_fetch"}
-               {"query" : {"match" : {"event":" """ + event + """ "}}}
-        """
+               {"query" : {"match" : {"event":" """ + event + """ "}}}\n"""
         response, body = self.post(self._uri(uri), body, header)
         self.expected_success(200, response.status)
         body = self.deserialize(body)
