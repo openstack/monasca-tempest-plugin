@@ -49,6 +49,9 @@ class TestLogApiConstraints(base.BaseLogsTestCase):
         except exceptions.InvalidContentType as urc:
             self.assertEqual(415, urc.resp.status)
             return
+        except exceptions.BadRequest as urc:
+            self.assertEqual(400, urc.resp.status)
+            return
 
         self.assertTrue(False, 'API should respond with 400')
 
