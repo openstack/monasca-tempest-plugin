@@ -3,7 +3,7 @@
     templates:
       - check-requirements
       - tempest-plugin-jobs
-      - build-openstack-docs-pti
+      - publish-openstack-docs-pti
     check:
       jobs:
         - monasca-tempest-python2-influxdb
