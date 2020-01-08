@@ -9,8 +9,8 @@
         - monasca-tempest-python2-influxdb
         - monasca-tempest-python3-influxdb
         - monasca-tempest-python2-cassandra
-        - monascalog-python2-tempest
-        - monascalog-python3-tempest
+        - monasca-tempest-log-python3-influxdb:
+            voting: false
         - build-monasca-docker-image
     gate:
       queue: monasca
@@ -18,8 +18,6 @@
         - monasca-tempest-python2-influxdb
         - monasca-tempest-python3-influxdb
         - monasca-tempest-python2-cassandra
-        - monascalog-python2-tempest
-        - monascalog-python3-tempest
     post:
       jobs:
         - publish-monasca-tempest-plugin-docker-image
