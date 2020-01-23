@@ -6,18 +6,15 @@
       - publish-openstack-docs-pti
     check:
       jobs:
-        - monasca-tempest-python2-influxdb
         - monasca-tempest-python3-influxdb
-        - monasca-tempest-python2-cassandra
+        - monasca-tempest-python3-cassandra
         - monasca-tempest-log-python3-influxdb:
             voting: false
         - build-monasca-docker-image
     gate:
       queue: monasca
       jobs:
-        - monasca-tempest-python2-influxdb
         - monasca-tempest-python3-influxdb
-        - monasca-tempest-python2-cassandra
     post:
       jobs:
         - publish-monasca-tempest-plugin-docker-image
