@@ -232,7 +232,7 @@ class TestAlarmsCount(base.BaseMonascaTest):
         resp, response_body = self.monasca_client.list_alarms()
         alarm_low_count = 0
         for alarm in response_body['elements']:
-            if alarm['state'] is 'ALARM' and alarm['severity'] is 'LOW':
+            if alarm['state'] == 'ALARM' and alarm.get('severity', '') == 'LOW':
                 alarm_low_count += 1
 
         # Using urlencode mimics the CLI behavior. Without the urlencode, falcon
