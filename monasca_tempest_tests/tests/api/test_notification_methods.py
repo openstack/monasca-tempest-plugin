@@ -296,24 +296,6 @@ class TestNotificationMethods(base.BaseMonascaTest):
 
     @decorators.attr(type="gate")
     @decorators.attr(type=['negative'])
-    def test_create_email_notification_method_with_invalid_non_zero_period(self):
-        notification = helpers.create_notification(period=60)
-        self.assertRaises((exceptions.BadRequest, exceptions.UnprocessableEntity),
-                          self.monasca_client.create_notifications,
-                          notification)
-
-    @decorators.attr(type="gate")
-    @decorators.attr(type=['negative'])
-    def test_create_pagerduty_notification_method_with_invalid_non_zero_period(self):
-        notification = helpers.create_notification(type='PAGERDUTY',
-                                                   address='test03@localhost',
-                                                   period=60)
-        self.assertRaises((exceptions.BadRequest, exceptions.UnprocessableEntity),
-                          self.monasca_client.create_notifications,
-                          notification)
-
-    @decorators.attr(type="gate")
-    @decorators.attr(type=['negative'])
     def test_create_webhook_notification_method_with_invalid_period(self):
         notification = helpers.create_notification(type='WEBHOOK',
                                                    address='http://localhost/test01',
@@ -759,63 +741,6 @@ class TestNotificationMethods(base.BaseMonascaTest):
 
     @decorators.attr(type="gate")
     @decorators.attr(type=['negative'])
-    def test_update_email_notification_method_with_nonzero_period(self):
-        name = data_utils.rand_name('notification-')
-        notification = helpers.create_notification(name=name)
-        resp, response_body = self.monasca_client.create_notifications(
-            notification)
-        id = response_body['id']
-        self.assertEqual(201, resp.status)
-        self.assertRaises((exceptions.BadRequest, exceptions.UnprocessableEntity),
-                          self.monasca_client.update_notification_method, id,
-                          name=response_body['name'], type=response_body['type'],
-                          address=response_body['address'], period=60)
-        resp, response_body = \
-            self.monasca_client.delete_notification_method(id)
-        self.assertEqual(204, resp.status)
-
-    @decorators.attr(type="gate")
-    @decorators.attr(type=['negative'])
-    def test_update_webhook_notification_method_to_email_with_nonzero_period(self):
-        name = data_utils.rand_name('notification-')
-        notification = helpers.create_notification(name=name,
-                                                   type='WEBHOOK',
-                                                   address='http://localhost/test01',
-                                                   period=60)
-        resp, response_body = self.monasca_client.create_notifications(
-            notification)
-        id = response_body['id']
-        self.assertEqual(201, resp.status)
-        self.assertRaises((exceptions.BadRequest, exceptions.UnprocessableEntity),
-                          self.monasca_client.update_notification_method, id,
-                          name=response_body['name'], type='EMAIL',
-                          address='test@localhost', period=response_body['period'])
-        resp, response_body = \
-            self.monasca_client.delete_notification_method(id)
-        self.assertEqual(204, resp.status)
-
-    @decorators.attr(type="gate")
-    @decorators.attr(type=['negative'])
-    def test_update_webhook_notification_method_to_pagerduty_with_nonzero_period(self):
-        name = data_utils.rand_name('notification-')
-        notification = helpers.create_notification(name=name,
-                                                   type='WEBHOOK',
-                                                   address='http://localhost/test01',
-                                                   period=60)
-        resp, response_body = self.monasca_client.create_notifications(
-            notification)
-        id = response_body['id']
-        self.assertEqual(201, resp.status)
-        self.assertRaises((exceptions.BadRequest, exceptions.UnprocessableEntity),
-                          self.monasca_client.update_notification_method, id,
-                          name=response_body['name'], type='PAGERDUTY',
-                          address='test@localhost', period=response_body['period'])
-        resp, response_body = \
-            self.monasca_client.delete_notification_method(id)
-        self.assertEqual(204, resp.status)
-
-    @decorators.attr(type="gate")
-    @decorators.attr(type=['negative'])
     def test_update_notification_method_with_non_int_period(self):
         name = data_utils.rand_name('notification-')
         notification = helpers.create_notification(name=name)
@@ -992,57 +917,6 @@ class TestNotificationMethods(base.BaseMonascaTest):
         self.assertRaises(
             (exceptions.BadRequest, exceptions.UnprocessableEntity),
             self.monasca_client.patch_notification_method, id, address=new_address_long)
-        resp, response_body = \
-            self.monasca_client.delete_notification_method(id)
-        self.assertEqual(204, resp.status)
-
-    @decorators.attr(type="gate")
-    @decorators.attr(type=['negative'])
-    def test_patch_email_notification_method_with_nonzero_period(self):
-        name = data_utils.rand_name('notification-')
-        notification = helpers.create_notification(name=name)
-        resp, response_body = self.monasca_client.create_notifications(
-            notification)
-        id = response_body['id']
-        self.assertEqual(201, resp.status)
-        self.assertRaises((exceptions.BadRequest, exceptions.UnprocessableEntity),
-                          self.monasca_client.patch_notification_method, id, period=60)
-        resp, response_body = \
-            self.monasca_client.delete_notification_method(id)
-        self.assertEqual(204, resp.status)
-
-    @decorators.attr(type="gate")
-    @decorators.attr(type=['negative'])
-    def test_patch_webhook_notification_method_to_email_with_nonzero_period(self):
-        name = data_utils.rand_name('notification-')
-        notification = helpers.create_notification(name=name,
-                                                   type='WEBHOOK',
-                                                   address='http://localhost/test01',
-                                                   period=60)
-        resp, response_body = self.monasca_client.create_notifications(
-            notification)
-        id = response_body['id']
-        self.assertEqual(201, resp.status)
-        self.assertRaises((exceptions.BadRequest, exceptions.UnprocessableEntity),
-                          self.monasca_client.patch_notification_method, id, type='EMAIL')
-        resp, response_body = \
-            self.monasca_client.delete_notification_method(id)
-        self.assertEqual(204, resp.status)
-
-    @decorators.attr(type="gate")
-    @decorators.attr(type=['negative'])
-    def test_patch_webhook_notification_method_to_pagerduty_with_nonzero_period(self):
-        name = data_utils.rand_name('notification-')
-        notification = helpers.create_notification(name=name,
-                                                   type='WEBHOOK',
-                                                   address='http://localhost/test01',
-                                                   period=60)
-        resp, response_body = self.monasca_client.create_notifications(
-            notification)
-        id = response_body['id']
-        self.assertEqual(201, resp.status)
-        self.assertRaises((exceptions.BadRequest, exceptions.UnprocessableEntity),
-                          self.monasca_client.patch_notification_method, id, type='PAGERDUTY')
         resp, response_body = \
             self.monasca_client.delete_notification_method(id)
         self.assertEqual(204, resp.status)
