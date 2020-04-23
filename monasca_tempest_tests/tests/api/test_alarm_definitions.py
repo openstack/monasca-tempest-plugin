@@ -220,7 +220,7 @@ class TestAlarmDefinitions(base.BaseMonascaTest):
         alarm_def_name = data_utils.rand_name('monitoring_alarm')
         alarm_definition = helpers.create_alarm_definition(
             name=alarm_def_name,
-            expression="avg(mem_total_mb{dev=\\usr\local\bin}) gt 0",
+            expression="avg(mem_total_mb{dev=\\usr\local\bin}) gt 0", # noqa
             alarm_actions=[notification_id],
             ok_actions=[notification_id],
             undetermined_actions=[notification_id],
