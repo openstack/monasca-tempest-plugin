@@ -13,9 +13,12 @@
 # under the License.
 
 from tempest import clients
+from tempest import config
 
 from monasca_tempest_tests.services import elasticsearch_client
 from monasca_tempest_tests.services import log_api_v3_client
+
+CONF = config.CONF
 
 
 class Manager(clients.Manager):
@@ -24,12 +27,12 @@ class Manager(clients.Manager):
 
         self.log_api_client = log_api_v3_client.LogApiV3Client(
             self.auth_provider,
-            'logs',
+            CONF.monitoring.catalog_type_logs,
             None
         )
 
         self.log_search_client = elasticsearch_client.ElasticsearchClient(
             self.auth_provider,
-            'logs-search',
+            CONF.monitoring.catalog_type_log_query,
             None
         )

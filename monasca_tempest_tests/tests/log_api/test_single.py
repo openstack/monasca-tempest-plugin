@@ -12,12 +12,14 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+from tempest import config
 from tempest.lib.common.utils import test_utils
 from tempest.lib import decorators
 from testtools import matchers
 
 from monasca_tempest_tests.tests.log_api import base
 
+CONF = config.CONF
 _RETRY_COUNT = 15
 _RETRY_WAIT = 2
 
@@ -85,7 +87,10 @@ class TestSingleLog(base.BaseLogsSearchTestCase):
         cross_tennant_id = '2106b2c8da0eecdb3df4ea84a0b5624b'
         fields = {'tenant_id': cross_tennant_id}
         response = self._run_and_wait(sid, message, headers=headers, fields=fields)
-        self.assertThat(response[0]['_source']['tenant'],
+        log_msg = response[0]
+        for key in CONF.monitoring.log_project_id_path:
+            log_msg = log_msg.pop(key)
+        self.assertThat(log_msg,
                         matchers.StartsWith(cross_tennant_id))
 
     # TODO(trebski) following test not passing - failed to retrieve

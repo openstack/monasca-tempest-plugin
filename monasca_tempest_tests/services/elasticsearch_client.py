@@ -19,6 +19,7 @@ from tempest.lib.common import rest_client
 
 CONF = cfg.CONF
 
+
 header = {'kbn-version': CONF.monitoring.kibana_version, 'kbn-xsrf': 'kibana'}
 
 
@@ -56,9 +57,11 @@ class ElasticsearchClient(rest_client.RestClient):
 
     def search_messages(self, message, headers=None):
         uri = '_msearch'
-        body = u"""
-               {"index" : "*", "search_type" : "dfs_query_then_fetch"}
-               {"query" : {"match" : {"message":" """ + message + """ "}}}\n"""
+        field = CONF.monitoring.log_query_message_field
+        body = ('\n'
+                '{"index" : "*", "search_type" : "dfs_query_then_fetch"}\n'
+                '{"query" : {"match" : {"' + field + '":"' + message + '"}}}'
+                '\n')
         response, body = self.post(self._uri(uri), body, headers)
         self.expected_success(200, response.status)
         body = self.deserialize(body)

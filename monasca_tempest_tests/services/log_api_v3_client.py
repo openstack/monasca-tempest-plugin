@@ -14,12 +14,13 @@
 
 from oslo_serialization import jsonutils as json
 from six.moves.urllib.parse import urlencode
+from tempest import config
 from tempest.lib.common import rest_client
+
+CONF = config.CONF
 
 
 class LogApiV3Client(rest_client.RestClient):
-
-    _uri = "/logs"
 
     def __init__(self, auth_provider, service, region):
         super(LogApiV3Client, self).__init__(
@@ -39,7 +40,7 @@ class LogApiV3Client(rest_client.RestClient):
         }
         default_headers.update(headers)
         msg = json.dumps(log)
-        uri = LogApiV3Client._uri
+        uri = CONF.monitoring.log_uri_path
 
         if fields:
             uri += '?' + urlencode(fields)
@@ -49,4 +50,4 @@ class LogApiV3Client(rest_client.RestClient):
         return resp, body
 
     def custom_request(self, method, headers=None, body=None):
-        self.request(method=method, url=LogApiV3Client._uri, headers=headers, body=body)
+        self.request(method=method, url=CONF.monitoring.log_uri_path, headers=headers, body=body)
