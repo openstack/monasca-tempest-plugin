@@ -34,10 +34,10 @@
     vars:
       publisher: true
     secrets:
-      - doker_hub_login_log_tempest
+      - doker_hub_login_tempest
 
 - secret:
-    name: doker_hub_login_log_tempest
+    name: doker_hub_login_tempest
     data:
       user: !encrypted/pkcs1-oaep
         - TB40TL1BT0pn4kcfHVZqtu+7cuRXM2OJYmHUDdpAVjdwiZvhTu6W0e2jWGv5knNXsPI+n
