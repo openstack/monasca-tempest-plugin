@@ -16,9 +16,7 @@
 # TODO(RMH): Check if ' should be added in the list of INVALID_CHARS.
 # TODO(RMH): test_create_metric_no_value, should return 422 if value not sent
 import time
-
-from six.moves import urllib_parse as urlparse
-from six import text_type
+from urllib import parse as urlparse
 
 from tempest.lib.common.utils import data_utils
 from tempest.lib import decorators
@@ -618,8 +616,8 @@ class TestMetrics(base.BaseMonascaTest):
 
     def _verify_list_metrics_element(self, element, test_key=None,
                                      test_value=None, test_name=None):
-        self.assertTrue(type(element['id']) is text_type)
-        self.assertTrue(type(element['name']) is text_type)
+        self.assertTrue(type(element['id']) is str)
+        self.assertTrue(type(element['name']) is str)
         self.assertTrue(type(element['dimensions']) is dict)
         self.assertEqual(set(element), set(['dimensions', 'id', 'name']))
         self.assertTrue(str(element['id']) is not None)
@@ -655,7 +653,7 @@ class TestMetrics(base.BaseMonascaTest):
             if elements:
                 dimensions = elements[0]
                 dimension = dimensions['dimensions']
-                value = dimension[text_type(key)]
+                value = dimension[str(key)]
                 self.assertEqual(value_org, value)
                 break
             else:

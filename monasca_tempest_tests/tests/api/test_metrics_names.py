@@ -13,8 +13,7 @@
 # under the License.
 
 import time
-
-from six.moves.urllib.parse import urlencode
+from urllib.parse import urlencode
 
 from monasca_tempest_tests.tests.api import base
 from monasca_tempest_tests.tests.api import constants

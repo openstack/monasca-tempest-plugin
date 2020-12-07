@@ -13,8 +13,7 @@
 # under the License.
 
 import time
-
-import six.moves.urllib.parse as parse
+import urllib.parse as parse
 
 from tempest.lib.common.utils import data_utils
 from tempest.lib import decorators

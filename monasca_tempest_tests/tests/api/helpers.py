@@ -14,8 +14,8 @@
 # under the License.
 import datetime
 import time
+import urllib.parse as urlparse
 
-import six.moves.urllib.parse as urlparse
 from tempest.lib.common.utils import data_utils
 
 NUM_ALARM_DEFINITIONS = 2

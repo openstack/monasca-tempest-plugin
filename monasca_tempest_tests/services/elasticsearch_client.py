@@ -14,7 +14,6 @@
 
 from oslo_config import cfg
 from oslo_serialization import jsonutils as json
-from six import PY3
 from tempest.lib.common import rest_client
 
 CONF = cfg.CONF
@@ -35,7 +34,7 @@ class ElasticsearchClient(rest_client.RestClient):
 
     @staticmethod
     def deserialize(body):
-        body = body.decode('utf-8') if PY3 else body
+        body = body.decode('utf-8')
         return json.loads(body.replace("\n", ""))
 
     @staticmethod

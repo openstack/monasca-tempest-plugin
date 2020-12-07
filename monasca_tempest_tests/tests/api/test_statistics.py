@@ -14,10 +14,8 @@
 # under the License.
 
 import time
-
-import six.moves.urllib.parse as urlparse
-from six.moves.urllib.parse import urlencode
-from six import text_type
+import urllib.parse as urlparse
+from urllib.parse import urlencode
 
 from monasca_tempest_tests.tests.api import base
 from monasca_tempest_tests.tests.api import constants
@@ -480,9 +478,9 @@ class TestStatistics(base.BaseMonascaTest):
     def _verify_element(self, element):
         self.assertTrue(set(['id', 'name', 'dimensions', 'columns',
                              'statistics']) == set(element))
-        self.assertTrue(type(element['id']) is text_type)
+        self.assertTrue(type(element['id']) is str)
         self.assertTrue(element['id'] is not None)
-        self.assertTrue(type(element['name']) is text_type)
+        self.assertTrue(type(element['name']) is str)
         self.assertTrue(type(element['dimensions']) is dict)
         self.assertEqual(len(element['dimensions']), 0)
         self.assertTrue(type(element['columns']) is list)

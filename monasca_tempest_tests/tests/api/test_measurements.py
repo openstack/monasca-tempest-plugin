@@ -14,8 +14,6 @@
 
 import time
 
-from six import text_type
-
 from monasca_tempest_tests.tests.api import base
 from monasca_tempest_tests.tests.api import constants
 from monasca_tempest_tests.tests.api import helpers
@@ -391,7 +389,7 @@ class TestMeasurements(base.BaseMonascaTest):
             self.assertEqual(set(element),
                              set(['columns', 'dimensions', 'id',
                                   'measurements', 'name']))
-            self.assertTrue(type(element['name']) is text_type)
+            self.assertTrue(type(element['name']) is str)
             self.assertTrue(type(element['dimensions']) is dict)
             self.assertTrue(type(element['columns']) is list)
             self.assertTrue(type(element['measurements']) is list)

@@ -12,8 +12,9 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+from urllib.parse import urlencode
+
 from oslo_serialization import jsonutils as json
-from six.moves.urllib.parse import urlencode
 from tempest import config
 from tempest.lib.common import rest_client
 

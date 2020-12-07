@@ -12,7 +12,8 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import six.moves.urllib.parse as urlparse
+import urllib.parse as urlparse
+
 from tempest.common import credentials_factory
 from tempest import config
 from tempest.lib import exceptions
