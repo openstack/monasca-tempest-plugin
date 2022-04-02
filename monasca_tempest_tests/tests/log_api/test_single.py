@@ -81,11 +81,11 @@ class TestSingleLog(base.BaseLogsSearchTestCase):
         self._run_and_wait(sid, message.replace(' ', '\n'))
 
     @decorators.attr(type="gate")
-    def test_send_cross_tenant(self):
+    def test_send_cross_project(self):
         sid, message = base.generate_small_message()
         headers = {'X-Roles': 'admin, monitoring-delegate'}
         cross_tennant_id = '2106b2c8da0eecdb3df4ea84a0b5624b'
-        fields = {'tenant_id': cross_tennant_id}
+        fields = {'project_id': cross_tennant_id}
         response = self._run_and_wait(sid, message, headers=headers, fields=fields)
         log_msg = response[0]
         for key in CONF.monitoring.log_project_id_path:
