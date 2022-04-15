@@ -10,10 +10,10 @@
         - monasca-tempest-python3-cassandra
         - monasca-tempest-log-python3-influxdb
         - build-monasca-docker-image
+        - monasca-tempest-influxdb-yoga
         - monasca-tempest-influxdb-xena
         - monasca-tempest-influxdb-wallaby
         - monasca-tempest-influxdb-victoria
-        - monasca-tempest-influxdb-ussuri
     gate:
       queue: monasca
       jobs:
@@ -30,6 +30,11 @@
         - publish-monasca-tempest-plugin-docker-image
 
 - job:
+    name: monasca-tempest-influxdb-yoga
+    parent: monasca-tempest-python3-influxdb
+    override-checkout: stable/yoga
+
+- job:
     name: monasca-tempest-influxdb-xena
     parent: monasca-tempest-python3-influxdb
     override-checkout: stable/xena
@@ -43,12 +48,6 @@
     name: monasca-tempest-influxdb-victoria
     parent: monasca-tempest-python3-influxdb
     override-checkout: stable/victoria
-
-- job:
-    name: monasca-tempest-influxdb-ussuri
-    parent: monasca-tempest-python3-influxdb
-    nodeset: openstack-single-node-bionic
-    override-checkout: stable/ussuri
 
 - job:
     name: publish-monasca-tempest-plugin-docker-image
