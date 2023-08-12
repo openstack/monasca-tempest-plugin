@@ -1,5 +1,6 @@
 
 - project:
+    queue: monasca
     templates:
       - check-requirements
       - tempest-plugin-jobs
@@ -15,7 +16,6 @@
         - monasca-tempest-influxdb-wallaby
         - monasca-tempest-influxdb-victoria
     gate:
-      queue: monasca
       jobs:
         - monasca-tempest-python3-influxdb
         - monasca-tempest-log-python3-influxdb
